@@ -1,0 +1,22 @@
+.login-bg {
+    background: #f0f2f5;
+    background-image: url("https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg");
+    background-repeat: no-repeat;
+    background-position: center 110px;
+    background-size: 100%;
+    min-height: 100%;
+    padding: 150px 0;
+    .login-title {
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .login-form {
+        width: 368px;
+        margin: 0 auto;
+        box-sizing: content-box;
+    }
+    .login-form-button {
+        width: 100%;
+    }
+}
