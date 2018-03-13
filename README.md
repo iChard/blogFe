@@ -19,6 +19,7 @@
 
 这里我是通过nginx改了一下的:
 
+```nginx
     server {
         listen 8080;
         charset utf-8;
@@ -41,5 +42,6 @@
         }
     
     }
+```
 
 
