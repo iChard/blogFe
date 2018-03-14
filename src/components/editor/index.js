@@ -143,7 +143,7 @@ class Editor extends Component {
     }
 
     render() {
-        return <textarea id='ichard-blog-editor'>11</textarea>
+        return <textarea id='ichard-blog-editor'></textarea>
     }
 
     componentDidMount() {
