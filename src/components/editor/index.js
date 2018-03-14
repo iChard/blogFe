@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import SimpleMDE from 'react-simplemde-editor';
 import SimpleMDE from 'simplemde';
 import server from '../../lib/server';
 import MdParser from '../common/mdParser';
