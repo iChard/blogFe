@@ -1,0 +1,159 @@
+cssPrefix = 'tui-colorpicker-'
+
+containerWidth = 152px;
+
+box()
+    width: arguments
+    height: arguments
+    border: 1px solid #ccc;
+
+no-mp()
+    margin: 0px;
+    padding: 0px;
+
+inlineBlock()
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+
+clearfix()
+    zoom: 1;
+    &:after
+        content: '';
+        display: block;
+        clear: both;
+
++prefix-classes(cssPrefix)
+    // Common
+    .clearfix
+        zoom: 1;
+
+    .clearfix:after
+        content: '';
+        display: block;
+        clear: both;
+
+    .vml
+        behavior: url(#default#VML);
+        display: block;
+
+    .container
+        width: containerWidth;
+
+    // Palette
+    .palette-container
+        width: containerWidth;
+
+    .palette-container ul
+        width: containerWidth;
+        no-mp();
+
+    .palette-container li
+        bow(16px)
+        float:left;
+        margin: 0;
+        padding: 0 3px 3px 0;
+        list-style: none;
+
+    .palette-button
+        display: block;
+        border: none;
+        overflow: hidden;
+        outline: none;
+        no-mp();
+        box(16px);
+        cursor: pointer;
+
+    .palette-button.selected
+        border: 2px solid #000;
+
+    .palette-hex
+        font-family: monospace;
+        inlineBlock();
+        width: 60px;
+        vertical-align: middle;
+
+    .palette-preview
+        inlineBlock();
+        box(12px);
+        border: 1px solid #ccc;
+        vertical-align: middle;
+        overflow: hidden;
+
+    .palette-toggle-slider
+        inlineBlock();
+        vertical-align: middle;
+        float: right;
+
+    // Slider View
+    .slider-container
+        margin: 5px 0 0 0;
+        height: containerWidth - 30;
+        clearfix()
+
+    .slider-left
+        float: left;
+        width: containerWidth - 32;
+        height: containerWidth - 32;
+
+    .slider-right
+        float: right;
+        width: 32px;
+        height: containerWidth - 32;
+
+    .svg
+        display: block;
+    
+    // general
+    .slider-handle
+        position: absolute;
+        overflow: visible;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 1px;
+        z-index: 2;
+        opacity: 0.9;
+
+    // slider part
+    // SVG
+    .svg-slider
+        box(containerWidth - 32);
+        overflow: hidden;
+
+    // VML
+    .vml-slider
+        position: relative;
+        box(containerWidth - 32);
+        overflow: hidden;
+
+    .vml-slider-bg
+        position: absolute;
+        margin: -1px 0 0 -1px;
+        top: 0;
+        left: 0;
+        width: containerWidth - 30;
+        height: containerWidth - 30;
+
+    // huebar part
+    // SVG
+    .svg-huebar
+        float: right;
+        width: 18px;
+        height: containerWidth - 32;
+        border: 1px solid #ccc;
+        overflow: visible;
+
+    // VML
+    .vml-huebar
+        width: 32px;
+        position: relative;
+    
+    .vml-huebar-bg
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 18px;
+        height: containerWidth - 31;
+
+
