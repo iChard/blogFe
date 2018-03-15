@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Layout, Menu, Icon, Button } from 'antd';
+import { Layout, Menu, Icon, Button } from 'antd';
 import { Route, Link } from 'react-router-dom'
 import server from '../../lib/server';
 import WriteArticle from './write';
@@ -15,28 +15,37 @@ export default class Admin extends Component {
     state = {
         collapsed: false,
         widHeight: window.innerHeight,
-        selectedKeys: ['1']
+        selectedKeys: ['1'],
+        logoutLoading: false
     }
 
     componentWillMount() {
+        this.checkLogin();
+    }
 
+    checkLogin = () => {
+        server.get('/admin/user',{}, () => {
+
+        })
     }
 
     logout = () => {
+        this.setState({logoutLoading: true});
         server.get('/account/logout', {}, (res) => {
-            console.log('res2: ', res);
+            this.setState({logoutLoading: false});
+            window.location.href = '/';
         })
     }
 
     checkMenu = (obj) => {
-        let {selectedKeys} = obj;
-        this.setState({selectedKeys})
+        let { selectedKeys } = obj;
+        this.setState({ selectedKeys })
     }
 
     toggleSider = () => {
         this.setState({ collapsed: !this.state.collapsed })
     }
-    
+
     render() {
         let { match } = this.props;
         return (
@@ -54,21 +63,20 @@ export default class Admin extends Component {
                             <Item key='sub1-1'><Link to={`${match.path}/list`} >文章列表</Link></Item>
                             <Item key='sub1-2'><Link to={`${match.path}/write`}>创建文章</Link></Item>
                             <Item key='sub1-3'><Link to={`${match.path}/tags`}>标签管理</Link></Item>
-                            <Item key='sub1-4'><Link to={`${match.path}/edit`}>文章编辑</Link></Item>
                         </SubMenu>
                     </Menu>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
                         <Icon className='trigger' type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggleSider} />
-                        <Button type='primary' className='btn-logout' onClick={this.logout}>登出</Button>
+                        <Button type='primary' className='btn-logout' onClick={this.logout} loading={this.state.logoutLoading || false}>登出</Button>
                     </Header>
                     <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minheight: 280 }}>
                         <Route exact path={`${match.path}/`} component={Home}></Route>
                         <Route path={`${match.path}/write`} component={WriteArticle}></Route>
                         <Route path={`${match.path}/list`} component={BriefList}></Route>
                         <Route path={`${match.path}/tags`} component={BriefList}></Route>
-                        <Route path={`${match.path}/edit`} component={Edit}></Route>
+                        <Route path={`${match.path}/article`} component={Edit}></Route>
                     </Content>
                 </Layout>
 

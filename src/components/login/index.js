@@ -6,6 +6,10 @@ import './index.css';
 const FormItem = Form.Item;
 class NormalLogin extends Component {
 
+    state= {
+        loading: false
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -17,14 +21,12 @@ class NormalLogin extends Component {
     }
 
     login = (data) => {
+        this.setState({loading: true});
         server.post('/account/login', data, (res) => {
-            console.log('res0:', res);
-            window.location.href = '/admin'
+            this.setState({loading: false});
+            window.location.href = '/admin';
         })
     }
-
-
-
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -61,7 +63,7 @@ class NormalLogin extends Component {
                             )
                         }
                         <br />
-                        <Button type="primary" htmlType="submit" className="login-form-button">登录</Button>
+                        <Button type="primary" htmlType="submit" className="login-form-button" loading={this.state.loading}>登录</Button>
                     </FormItem>
                 </Form>
             </div>

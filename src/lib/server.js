@@ -1,4 +1,5 @@
-var reqwest = require('reqwest');
+import reqwest from 'reqwest';
+import {Modal} from 'antd';
 
 var fullUrl = (url) => {
     return '/api'+(url || '');
@@ -10,14 +11,32 @@ var com = (url, method, data={}, cb) => {
         method: method,
         data: data,
         crossOrigin: true,
-        success: (json) => {
-            if(json.result && /^1\d{2}$/.test(json.result)) {
-                cb && cb(json.data)
-            } else {
-                alert(json.message)
-            }
-        }
+        success: (json) => apiHandle(json, cb)
     })
+}
+
+var apiHandle = (res, cb) => {
+    if(res.result && /^1\d{2}$/.test(res.result)) {
+        cb && cb(res.data)
+    }else if(res.result && res.result === 700) {
+        Modal.warning({
+            title: '温馨提示！',
+            content: '您还没有登录或者登录失效，点击确认跳转到登录页面！',
+            width: 416,
+            okText: '确定',
+            onOk: () => {
+                console.log('重新登录！');
+                
+                window.location.href = '/login'
+            }
+        })
+    }else {
+        Modal.warning({
+            title: '温馨提示',
+            content: res.message || '接口错误！'
+        })
+    }
+
 }
 
 var strJoinObj = (url='', obj={}) => {
@@ -47,7 +66,7 @@ var del = (url, cb) => {
     return com(fullUrl(url), 'delete', {}, cb);
 }
 
-module.exports = {
+export default {
     get: (url, data, cb) => get(url, data, cb),
     post: (url, data, cb) => post(url, data, cb),
     del: (url, cb) => del(url, cb)

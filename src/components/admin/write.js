@@ -40,7 +40,7 @@ class WriteArticle extends Component {
         saveLoading: false,
         title: '',
         tagValue: ['0-0-0'],
-        markDown: '',
+        markDown: ''
     }
 
     pubArticle = () => {
@@ -99,7 +99,7 @@ class WriteArticle extends Component {
                 {this.renderItem('选择标签', this.renderTags())}
                 <Editor onChange={this.setArticle} toggleFull={this.toggleFullscreen}/>
                 <div className="action-area" style={{left: this.state.footerLeft}}>
-                    <Button type='primary' className='btn-pub' onClick={this.pubArticle}>发布文章</Button>
+                    <Button type='primary' className='btn-pub' onClick={this.pubArticle} loading={this.state.saveLoading}>发布文章</Button>
                 </div>
             </div>
         )
