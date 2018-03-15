@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import {Route, Link} from 'react-router-dom';
-import Viewer from 'tui-editor/dist/tui-editor-Viewer';
+import {Route} from 'react-router-dom';
+import utils from '../../utils/utils';
 import ArticleItem from './article';
-import Editor from 'tui-editor';
 import Photo from '../photo';
 import server from '../../lib/server';
 import './index.css';
+import MdParser from '../common/mdParser';
 
 class Content extends Component {
 
     render() {
-        const {mode, height} = this.props;
+        const {height} = this.props;
         return (
             <div className="right-col" style={{height: height+'px'}}>
                 <div className="right-container">
@@ -86,25 +86,16 @@ class Article extends Component {
 
 class ArticleItemView extends Component {
 
-    renderView() {
-        let {data} = this.props;
-        var viewer = new Viewer({
-            el: this.refs.articleitembox,
-            viewer: true,
-            height: '400px',
-            initialValue: (data.content || '').split('--more--')[0]
-        })
-    }
-
     render() {
+        let {data} = this.props;
         return (
-            <div ref="articleitembox"></div>
+            <div ref="articleitembox" dangerouslySetInnerHTML={{__html: utils.escapeHtml(MdParser.render(data.content))}}></div>
         )
     }
 
     
     componentDidMount() {
-        this.renderView();
+
     }
     
 }

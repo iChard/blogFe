@@ -9,6 +9,11 @@ function getQueryObj(url) {
     return o;
 }
 
+function escapeHtml(htmlStr) {
+    return (htmlStr ? (htmlStr+'') : '').replace(/<script>/g, '<!--').replace('/<\/script>/g', '-->');
+}
+
 module.exports = {
-    getQueryObj
+    getQueryObj,
+    escapeHtml
 }

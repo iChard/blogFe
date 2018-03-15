@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import Editor from 'tui-editor';
-import Viewer from 'tui-editor/dist/tui-editor-Viewer';
 import utils from '../../utils/utils';
 import server from '../../lib/server';
 import './index.css';
+import MdParser from '../common/mdParser';
 
 class ArticleItem extends Component {
 
@@ -20,39 +19,28 @@ class ArticleItem extends Component {
         let {id} = this.state;
         server.get(`/article/${id}`, {}, data => {
             this.setState({detail: data});
-            this.renderMain(data)
-        })
-    }
-
-    renderMain = (data) => {
-        var viewer = new Viewer({
-            el: this.refs.articleitembox,
-            viewer: true,
-            initialValue: data.content.split('--more--').join('\n')
         })
     }
 
     addComment = (comment) => {
         let {detail} = this.state;
-        console.log('comment', comment);
-        console.log('{comments: [comment].concat(detail.comments)}:', {comments: [comment].concat(detail.comments)});
-        
         this.setState({detail: Object.assign({}, detail, {comments: [comment].concat(detail.comments)})})
     }
 
     deleteComment = (id) => {
         let {detail} = this.state;
         server.del('/comments/delete/'+id, '', () => {
-            console.log('131213');
-            this.setState({detail: Object.assign({}, detail, {comments: detail.comments.filter(item => item.id != id)})})
+            this.setState({detail: Object.assign({}, detail, {comments: detail.comments.filter(item => Number(item.id) !== Number(id))})})
         })
     }
 
     render() {
         let {detail} = this.state;
+        // console.log('', React.createElement());
+        
         return (
             <div>
-                <div ref="articleitembox" className="article-view-item"></div>
+                <div ref="articleitembox" className="article-view-item" dangerouslySetInnerHTML={{__html: utils.escapeHtml(MdParser.render(detail.content))}}></div>
                 <div className="comments-area">
                     <CommentEditor update={this.addComment} articleId={this.state.id}/>
                     <Comments list={detail.comments || []} deleteComment={(id) => this.deleteComment(id)}/>
@@ -101,7 +89,7 @@ class CommentEditor extends Component {
     }
 
     subComment = () => {
-        let {comment, id} = this.state;
+        let {comment} = this.state;
         let {update, articleId} = this.props;
         server.post('/comments/posts', {articleId: articleId, comment, created: new Date().getTime()}, (res) => {
             update && update({...res})

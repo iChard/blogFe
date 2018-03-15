@@ -1,5 +1,4 @@
 var reqwest = require('reqwest');
-var conf = require('../conf');
 
 var fullUrl = (url) => {
     return '/api'+(url || '');
@@ -12,8 +11,6 @@ var com = (url, method, data={}, cb) => {
         data: data,
         crossOrigin: true,
         success: (json) => {
-            console.log('json:', json);
-            
             if(json.result && /^1\d{2}$/.test(json.result)) {
                 cb && cb(json.data)
             } else {

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import {Route, Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './index.css';
 
 export default class Slider extends Component {
 
     render() {
-        let {height} = this.props;
         return (
             <div className="left-col">
                 <div className="overlay"></div>

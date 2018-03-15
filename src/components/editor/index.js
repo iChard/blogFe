@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import SimpleMDE from 'simplemde';
-import server from '../../lib/server';
 import MdParser from '../common/mdParser';
 import './index.css';
 
@@ -121,7 +120,6 @@ class Editor extends Component {
 
     handleChange = (v) => {
         let { onChange } = this.props;
-        let { isFullScreen } = this.state;
         this.setState({ mdVal: v });
         onChange && onChange(v);
     }

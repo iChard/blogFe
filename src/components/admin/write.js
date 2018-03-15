@@ -44,7 +44,7 @@ class WriteArticle extends Component {
     }
 
     pubArticle = () => {
-        let {title, tagValue, markDown} = this.state;
+        let {title, markDown} = this.state;
         if(title && markDown) {
             this.setState({saveLoading: true});
             server.post('/saveArticle', {

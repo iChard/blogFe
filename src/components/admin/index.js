@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Layout, Menu, Icon, Button } from 'antd';
+import {  Layout, Menu, Icon, Button } from 'antd';
 import { Route, Link } from 'react-router-dom'
 import server from '../../lib/server';
 import WriteArticle from './write';
@@ -91,7 +91,7 @@ export default class Admin extends Component {
     }
 }
 
-const Home = ({ }) => {
+const Home = () => {
     return (
         <div>home</div>
     )
