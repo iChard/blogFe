@@ -1,3 +1,12 @@
 .CodeMirror-fullscreen {
     bottom: 50px;
 }
+pre {
+    padding: 20px 10px;
+    border-radius: 5px;
+    color: #afa8a6;
+    background: #2f3c48;
+}
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+    background: #fff;
+}

@@ -56,9 +56,6 @@
         align-items: center;
         justify-content: flex-end;
     }
-    .btn-pub {
-
-    }
 }
 
 .line-item {
@@ -72,5 +69,52 @@
     }
     .line-text {
         flex: 1;
+    }
+}
+.labelBox {
+    display: flex;
+    align-items: center;
+    .labelTitle {
+        width: 80px;
+    }
+    .labelNode {
+        flex: 1;
+    }
+}
+.tagsBox {
+    .title {
+        color: #888;
+        font-size: 16px;
+        margin: 20px 0 15px;
+    }
+    .itemsBox {
+        border: 1px solid #888;
+        padding: 10px;
+        border-radius: 5px;
+        min-height: 100px;
+    }
+    .actionBox {
+        text-align: right;
+        margin: 15px 0;
+
+    }
+    .headerLine {
+        display: flex;
+        align-items: center;
+    }
+    .labelBox {
+        margin-right: 30px;
+    }
+    .tagItem {
+        padding: 1px 5px;
+        border: 1px solid #d5d5d5;
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+    .tagText {
+        margin-right: 5px;
+        color: #888;
     }
 }

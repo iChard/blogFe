@@ -1,70 +1,89 @@
 import React, { Component } from 'react';
-import { Input, TreeSelect, Button } from "antd";
+import { Input, Button, Select } from "antd";
 import server from '../../lib/server';
 import Editor from '../editor';
 import './index.css';
 
-const SHOW_PARENT = TreeSelect.SHOW_PARENT;
-const treeData = [{
-    label: '后端',
-    value: '0-0',
-    key: '0-0',
-    children: [{
-        label: 'node',
-        value: '0-0-0',
-        key: '0-0-0',
-    }],
-}, {
-    label: '前端',
-    value: '0-1',
-    key: '0-1',
-    children: [{
-        label: 'ES6',
-        value: '0-1-0',
-        key: '0-1-0',
-    }, {
-        label: 'react',
-        value: '0-1-1',
-        key: '0-1-1',
-    }, {
-        label: 'react-router',
-        value: '0-1-2',
-        key: '0-1-2',
-    }],
-}];
-
+const Option = Select.Option;
 class WriteArticle extends Component {
 
     state = {
         footerLeft: 200,
         saveLoading: false,
         title: '',
-        tagValue: ['0-0-0'],
-        markDown: ''
+        markDown: '',
+        tags: [],
+        categories: [],
+        tagVal: [],
+        cateVal: [],
+        checkTag: '',
+        checkCate: '',
+        clearEditor: false
+    }
+
+
+    componentWillMount() {
+        this.pullTagList();
+    }
+
+
+    pullTagList() {
+        server.get('/admin/tags', {}, res => {
+            this.setState({
+                tags: res.tags || [],
+                categories: res.categories || []
+            })
+        })
     }
 
     pubArticle = () => {
-        let {title, markDown} = this.state;
-        if(title && markDown) {
-            this.setState({saveLoading: true});
+        let { title, markDown, checkTag, checkCate } = this.state;
+        if (title && markDown && checkTag && checkCate) {
+            this.setState({ saveLoading: true });
             server.post('/saveArticle', {
                 created: new Date().getTime(),
                 title: title,
                 content: markDown,
-                tags: 'javascript, node,express',
-                category: '技术'
+                tags: checkTag,
+                category: checkCate
             }, () => {
-                this.setState({saveLoading: false});
+                this.setState({ saveLoading: false });
+            }, () => {
+                this.setState({ saveLoading: false });
             })
         }
     }
 
+    resetData = () => {
+        this.setState({
+            markDown: '',
+            checkTag: '',
+            checkCate: ''
+        })
+    }
+
     setArticle = (markDown) => {
-        this.setState({markDown})
+        this.setState({ markDown })
+    }
+
+    setTags = (v) => {
+        let { tags } = this.state;
+        let c = tags.filter(item => ~v.indexOf(item.id+''));
+        let t = '';
+        c.forEach(item => t+=item.name+',');
+        this.setState({checkTag: t.replace(/,$/, ''), tagVal: v});        
+    }
+
+    setCategories = (v) => {
+        let { categories } = this.state;
+        let c = categories.filter(item => ~v.indexOf(item.id+''));
+        let t = '';
+        c.forEach(item => t+=item.name+',');
+        this.setState({checkCate: t.replace(/,$/, ''), cateVal: v}); 
     }
 
     toggleFullscreen = (isFull) => {
-        this.setState({footerLeft: isFull ? 0 : 200});
+        this.setState({ footerLeft: isFull ? 0 : 200 });
     }
 
     renderItem = (label, node) => {
@@ -77,28 +96,46 @@ class WriteArticle extends Component {
     }
 
     renderTags = () => {
-        const tProps = {
-            treeData,
-            value: this.state.tagValue,
-            onChange: this.checkTag,
-            treeCheckable: true,
-            showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: '请选择标签',
-            style: {
-                width: 400
-            }
-        };
-        return <TreeSelect {...tProps} />;
+        let { tags } = this.state;
+        let view = (
+            <Select
+                mode="multiple"
+                placeholder="请选择标签"
+                onChange={this.setTags}
+                style={{ width: '400px' }}>
+                {tags.map(item => (
+                    <Option key={item.id}>{item.name}</Option>
+                ))}
+            </Select>
+        )
+        return view;
+    }
+
+    renderCates = () => {
+        let { categories } = this.state;
+        let view = (
+            <Select
+                mode="multiple"
+                placeholder="请选择标签"
+                onChange={this.setCategories}
+                style={{ width: '400px' }}>
+                {categories.map(item => (
+                    <Option key={item.id}>{item.name}</Option>
+                ))}
+            </Select>
+        )
+        return view;
     }
 
     render() {
         return (
             <div className='content-write'>
                 <p className='title'>新建文章</p>
-                {this.renderItem('文章标题', <Input placeholder='文章标题' ref={node => this.refsTitle = node} style={{width: 400}} onChange={(e) => this.setState({title: e.target.value || ''})}/>)}
+                {this.renderItem('文章标题', <Input placeholder='文章标题' ref={node => this.refsTitle = node} style={{ width: 400 }} onChange={(e) => this.setState({ title: e.target.value || '' })} />)}
                 {this.renderItem('选择标签', this.renderTags())}
-                <Editor onChange={this.setArticle} toggleFull={this.toggleFullscreen}/>
-                <div className="action-area" style={{left: this.state.footerLeft}}>
+                {this.renderItem('选择分类', this.renderCates())}
+                <Editor onChange={this.setArticle} toggleFull={this.toggleFullscreen} value={undefined}/>
+                <div className="action-area" style={{ left: this.state.footerLeft }}>
                     <Button type='primary' className='btn-pub' onClick={this.pubArticle} loading={this.state.saveLoading}>发布文章</Button>
                 </div>
             </div>

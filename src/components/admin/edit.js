@@ -62,6 +62,8 @@ export default class Edit extends Component {
                 category: '技术'
             }, () => {
                 this.setState({ saveLoading: false });
+            }, () => {
+                this.setState({ saveLoading: false });
             })
         }
     }

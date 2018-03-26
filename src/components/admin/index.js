@@ -5,6 +5,7 @@ import server from '../../lib/server';
 import WriteArticle from './write';
 import BriefList from './list';
 import Edit from './edit';
+import TagManage from './tags';
 import './index.css';
 
 const { Header, Sider, Content } = Layout;
@@ -50,6 +51,8 @@ export default class Admin extends Component {
         let { match } = this.props;
         return (
             <Layout style={{ minHeight: this.state.widHeight, height: '100%' }}>
+                <script src="http://pv.sohu.com/cityjson?ie=utf-8">
+                </script>
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed} className='sider'>
                     <div className='logo'>博客管理后台</div>
                     <Menu theme='dark' mode='inline' defaultSelectedKeys={['1']} selectedKeys={this.state.selectedKeys} onSelect={this.checkMenu}>
@@ -75,7 +78,7 @@ export default class Admin extends Component {
                         <Route exact path={`${match.path}/`} component={Home}></Route>
                         <Route path={`${match.path}/write`} component={WriteArticle}></Route>
                         <Route path={`${match.path}/list`} component={BriefList}></Route>
-                        <Route path={`${match.path}/tags`} component={BriefList}></Route>
+                        <Route path={`${match.path}/tags`} component={TagManage}></Route>
                         <Route path={`${match.path}/article`} component={Edit}></Route>
                     </Content>
                 </Layout>

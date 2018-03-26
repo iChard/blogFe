@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
+import server from '../lib/server';
 import Slider from './slider';
 import Content from './content';
 import Demo from '../components/demo';
@@ -20,6 +21,11 @@ class Layout extends Component {
             contentMode: 'normal',
             widHeight: window.innerHeight
         }
+    }
+
+    
+    componentWillMount() {
+        // this.getIpAddress();
     }
 
     _resizeWindow() {
