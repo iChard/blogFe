@@ -8,6 +8,9 @@
     transition: all .2s ease-in;
     z-index: 999;
     height: 100%;
+    font-family: 'LingWai SC';
+    font-size: 20px;
+    overflow-y: auto;
     .overlay {
         background: #40a9ff;
         width: 100%;
@@ -16,9 +19,9 @@
     .nav-area {
         margin: 0 50px;
         text-align: center;
-        font-size: 14px;
         position: relative;
         padding-top: 80px;
+        padding-bottom: 100px;
     }
     .nav-head {
         width: 128px;
@@ -33,15 +36,28 @@
         top: -64px;
         left: 50%;
         margin-left: -64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .fa-superpowers {
+        font-size: 70px;
+        color: #6f1414;
     }
     .nav-name {
         color: #696969;
         margin: 20px 0;
+        font-size: 40px;
     }
     .nav-menu {
         font-weight: 300;
         line-height: 31px;
         li {height: 25px; line-height: 25px;}
+        .iconfont {
+            color: #1890ff;
+            margin-right: 5px;
+            vertical-align: top;
+        }
     }
     .nav-small-menu {
         margin: 15px 0;
@@ -53,9 +69,17 @@
         li {
             display: inline-block;
             margin: 0 8px 15px;
-            width: 28px;
             height: 28px;
             text-align: center;
+        }
+        .icon-github {
+            color: rgb(61, 51, 51);
+        }
+        .icon-CN_jianshu {
+            color: rgb(136, 34, 16);
+        }
+        .icon-weibiaoti103 {
+            color: rgb(128, 186, 213);
         }
     }
     .btn-editor {
@@ -71,7 +95,7 @@
         cursor: pointer;
         &:hover {
             background: #173d66;
-            font-size: 15px;
+            font-size: 25px;
         }
         a{
             color: #fff;

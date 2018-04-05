@@ -12,12 +12,12 @@ class WriteArticle extends Component {
         saveLoading: false,
         title: '',
         markDown: '',
-        tags: [],
-        categories: [],
-        tagVal: [],
-        cateVal: [],
-        checkTag: '',
-        checkCate: '',
+        tagAll: [],
+        cateAll: [],
+        tagIds: [],
+        cateIds: [],
+        tagNames: '',
+        cateNames: '',
         clearEditor: false
     }
 
@@ -30,22 +30,24 @@ class WriteArticle extends Component {
     pullTagList() {
         server.get('/admin/tags', {}, res => {
             this.setState({
-                tags: res.tags || [],
-                categories: res.categories || []
+                tagAll: res.tags || [],
+                cateAll: res.categories || []
             })
         })
     }
 
     pubArticle = () => {
-        let { title, markDown, checkTag, checkCate } = this.state;
-        if (title && markDown && checkTag && checkCate) {
+        let { title, markDown, tagNames, cateNames, tagIds, cateIds } = this.state;
+        if (title && markDown && tagNames && cateNames) {
             this.setState({ saveLoading: true });
             server.post('/saveArticle', {
                 created: new Date().getTime(),
                 title: title,
                 content: markDown,
-                tags: checkTag,
-                category: checkCate
+                tagIds: tagIds.join(','),
+                cateIds: cateIds.join(','),
+                tagNames: tagNames,
+                cateNames: cateNames
             }, () => {
                 this.setState({ saveLoading: false });
             }, () => {
@@ -57,8 +59,8 @@ class WriteArticle extends Component {
     resetData = () => {
         this.setState({
             markDown: '',
-            checkTag: '',
-            checkCate: ''
+            tagNames: '',
+            cateNames: ''
         })
     }
 
@@ -67,19 +69,19 @@ class WriteArticle extends Component {
     }
 
     setTags = (v) => {
-        let { tags } = this.state;
-        let c = tags.filter(item => ~v.indexOf(item.id+''));
+        let { tagAll } = this.state;
+        let c = tagAll.filter(item => ~v.indexOf(item.id+''));
         let t = '';
         c.forEach(item => t+=item.name+',');
-        this.setState({checkTag: t.replace(/,$/, ''), tagVal: v});        
+        this.setState({tagNames: t.replace(/,$/, ''), tagIds: v});        
     }
 
     setCategories = (v) => {
-        let { categories } = this.state;
-        let c = categories.filter(item => ~v.indexOf(item.id+''));
+        let { cateAll } = this.state;
+        let c = cateAll.filter(item => ~v.indexOf(item.id+''));
         let t = '';
         c.forEach(item => t+=item.name+',');
-        this.setState({checkCate: t.replace(/,$/, ''), cateVal: v}); 
+        this.setState({cateNames: t.replace(/,$/, ''), cateIds: v}); 
     }
 
     toggleFullscreen = (isFull) => {
@@ -96,14 +98,14 @@ class WriteArticle extends Component {
     }
 
     renderTags = () => {
-        let { tags } = this.state;
+        let { tagAll, tagIds } = this.state;
         let view = (
             <Select
                 mode="multiple"
                 placeholder="请选择标签"
                 onChange={this.setTags}
                 style={{ width: '400px' }}>
-                {tags.map(item => (
+                {tagAll.map(item => (
                     <Option key={item.id}>{item.name}</Option>
                 ))}
             </Select>
@@ -112,14 +114,14 @@ class WriteArticle extends Component {
     }
 
     renderCates = () => {
-        let { categories } = this.state;
+        let { cateAll } = this.state;
         let view = (
             <Select
                 mode="multiple"
                 placeholder="请选择标签"
                 onChange={this.setCategories}
                 style={{ width: '400px' }}>
-                {categories.map(item => (
+                {cateAll.map(item => (
                     <Option key={item.id}>{item.name}</Option>
                 ))}
             </Select>

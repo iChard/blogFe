@@ -40,7 +40,10 @@ class ArticleItem extends Component {
         
         return (
             <div>
-                <div ref="articleitembox" className="article-view-item" dangerouslySetInnerHTML={{__html: utils.escapeHtml(MdParser.render(detail.content))}}></div>
+                <div className="article-view-item">
+                    <h1 className="artitle-title">{detail.title}</h1>
+                    <div ref="articleitembox" dangerouslySetInnerHTML={{__html: utils.escapeHtml(MdParser.render(detail.content))}}></div>
+                </div>
                 <div className="comments-area">
                     <CommentEditor update={this.addComment} articleId={this.state.id}/>
                     <Comments list={detail.comments || []} deleteComment={(id) => this.deleteComment(id)}/>

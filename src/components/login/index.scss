@@ -1,6 +1,6 @@
 .login-bg {
-    background: #f0f2f5;
-    background-image: url("https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg");
+    background: transparent;
+    // background-image: url("https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg");
     background-repeat: no-repeat;
     background-position: center 110px;
     background-size: 100%;
@@ -18,5 +18,15 @@
     }
     .login-form-button {
         width: 100%;
+    }
+    #canvas {
+        display: block;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 800px;
     }
 }

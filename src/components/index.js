@@ -11,7 +11,9 @@ import '../style/editor.css';
 import '../style/common.css';
 import './index.css';
 import '../style/rewrite.css';
-import 'highlight.js/styles/solarized-dark.css';
+import 'highlight.js/styles/solarized-dark.css';//  highlight主题
+import '../style/fontscss/font-awesome.css'; // font-awesome官方
+import '../style/font.css'; //alifont  iconfont
 
 class Layout extends Component {
 

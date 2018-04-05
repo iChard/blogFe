@@ -1,0 +1,15 @@
+.container.containerWaterFlow {
+    width: 100%;
+    position: relative;
+    overflow: visible;
+    height: 10px;
+    .waterflow-item {
+        position: absolute;
+        padding: 5px;
+        height: auto;
+        box-sizing: border-box;
+        margin-left: -8px;//滚动条宽度/2
+        cursor: pointer;
+        transition: 0.5s;
+    }
+}

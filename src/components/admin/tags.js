@@ -65,29 +65,26 @@ export default class TagManage extends Component {
         })
     }
 
-    geneColor() {
-        let r = Math.ceil(Math.random() * (50+(Math.random()*200)));
-        let g = Math.ceil(Math.random() * (50+(Math.random()*200)));
-        let b = Math.ceil(Math.random() * (50+(Math.random()*200)));
-        let a = Math.random();
-        return { r, g, b, a }
+    geneColor(index) {
+        let r, g, b, i, j;
+        r = 40 * index % 255 > 255 ? (index * 40 % 255) : 40 * index % 255;
+        g = Math.abs(r - 255);
+        b = 255 - (25 * index % 255 > 255 ? (index * 25 % 255) : 25 * index % 255);
+        return { r, g, b, a: 0.6 }
     }
 
     renderItems = (key) => {
         return this.state[key].map((item, index) => {
-            let { r, g, b, a } = this.geneColor();
+            let { r, g, b, a } = this.geneColor(index + 1);
             return (
                 <div className="tagItem" key={index.toString()}
-                    style={{    
-                        borderColor: `rgba(${r},${g},${b},${a})`,
-                        color: `rgb(${r},${g},${b})`,
-                        boxShadow: `0 0 1px 1px rgba(${r},${g}, ${b},${a})`
-                }}>
-                    <span className="tagText"
-                        style={{
-                            color: `rgb(${r},${g},${b})`
-                        }}>{item.name}</span>
-                    <Icon type="close" className="tranScale" style={{ cursor: 'pointer'}} onClick={() => this.deleteItem(key, item.id || null, index)} />
+                    style={{
+                        borderColor: `rgba(${b},${g},${r},${a})`,
+                        color: `rgb(${b},${g},${r})`,
+                        boxShadow: `0 0 0.5px 0.5px rgba(${b},${g}, ${r},${a})`
+                    }}>
+                    <span className="tagText">{item.name}</span>
+                    <Icon type="close" className="tranScale" style={{ cursor: 'pointer' }} onClick={() => this.deleteItem(key, item.id || null, index)} />
                 </div>
             )
         })
@@ -118,7 +115,7 @@ export default class TagManage extends Component {
                 message: '通知',
                 description: '标签分类配置成功，快去写文章吧！',
                 duration: 3,
-                icon: <Icon type="smile-circle"/>,
+                icon: <Icon type="smile-circle" style={{color: '#1890ff'}} />,
                 btn: <Button><a href={`/admin/write`}>去写文章</a></Button>
             })
         })

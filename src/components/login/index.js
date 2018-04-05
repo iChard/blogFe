@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Input, Icon, Checkbox, Button } from 'antd';
 import server from '../../lib/server';
 import './index.css';
+import drawBg from '../../utils/canvasBg';
 
 const FormItem = Form.Item;
 class NormalLogin extends Component {
@@ -32,8 +33,8 @@ class NormalLogin extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="login-bg">
-                <canvas id="login-bg-canvas" style={{display: 'none'}}></canvas>
-                <div className="login-title">iChard博客管理后台</div>
+                <canvas id="canvas"></canvas>
+                <div className="login-title">刘佩玉博客管理后台</div>
                 <Form className="login-form" onSubmit={this.handleSubmit}>
                     <FormItem>
                         {
@@ -69,6 +70,11 @@ class NormalLogin extends Component {
             </div>
         )
     }
+    
+    componentDidMount() {
+        drawBg();
+    }
+    
 }
 
 const Login = Form.create()(NormalLogin);
