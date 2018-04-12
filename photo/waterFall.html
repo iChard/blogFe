@@ -142,7 +142,6 @@
                     cols.push(o)
                 }
                 colsSortMin = cols.sort(function (a, b) { return a.h > b.h });
-                console.log('colsSortMin:', colsSortMin);
                 
                 maxHeight = colsSortMin[colsSortMin.length - 1].h
                 obj = {
@@ -179,7 +178,6 @@
                         item.style.left = index * (option.width + 10) + 'px';
                     } else {
                         // debugger;
-                        console.log('非第一行的元素index:', index);
                         mathEachCol(item, index, { iNum: iNum });
                     }
                 })
@@ -217,7 +215,6 @@
                 cols.push(o)
             }
             colsSortMin = cols.sort(function (a, b) { return a.h > b.h });
-            console.log('colsSortMin:', colsSortMin);
 
             obj = {
                 col: colsSortMin[0].col,
@@ -235,7 +232,6 @@
             var scroT = document.documentElement.scrollTop || document.body.scrollTop;
             if (minH < (scroT + document.documentElement.clientHeight)) {
                 console.log('onscroll');
-
                 generate()
             }
         };

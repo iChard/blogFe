@@ -1,7 +1,15 @@
 .container {
     position: relative;
     min-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    // overflow-x: hidden;
+    // overflow-y: auto;
     background: #eaeaea;
+}
+.containerPadding {
+    position: relative;
+    min-height: 100%;
+    // overflow-x: hidden;
+    // overflow-y: auto;
+    background: #eaeaea;
+    padding-left: 300px;
 }

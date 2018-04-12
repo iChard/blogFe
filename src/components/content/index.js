@@ -15,7 +15,7 @@ class Content extends Component {
     render() {
         const { height } = this.props;
         return (
-            <div className="right-col" style={{ height: height + 'px' }}>
+            <div className="right-col" /* style={{ height: height + 'px' }} */>
                 <canvas id="canvas"></canvas>
                 <div className="right-container">
                     <Route exact path="/" component={Article}></Route>

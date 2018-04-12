@@ -38,8 +38,14 @@ class Layout extends Component {
     
     render() {
         let {widHeight, contentMode} = this.state;
+        let {location} = this.props;
+        let needPadding = /\/admin/.test(location.pathname)
+        console.log('this.props:', this.props);
+        console.log('needPadding:', needPadding);
+        
+        
         return (
-            <div className="container" style={{height: widHeight+'px'}}>
+            <div className="container"/*  style={{height: widHeight+'px'}} */>
                 <Switch>    
                     <Route path="/demo" component={Demo}></Route>
                     <Route path="/editor" component={Editor}></Route>
@@ -64,7 +70,7 @@ class Layout extends Component {
 const Home = ({state}) => {
 
     return (
-        <div>
+        <div className="containerPadding">
             <Slider
                 height={state.widHeight}
             />

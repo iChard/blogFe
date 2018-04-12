@@ -117,9 +117,14 @@ export default class WaterFlow extends Component {
     }
 
     _scrollWindow = () => {
+        let {colTotal}=this.state;
         let { pullMore } = this.props;
-        console.log('121212');
-        
+        let scrollT = document.documentElement.scrollTop || document.body.scrollTop;
+        let minT =Math.min.apply(null, colTotal);
+        var clientHeight = document.documentElement.clientHeight;
+        if(minT < (clientHeight + scrollT)) {
+            pullMore && pullMore();
+        }        
     }
 
     _resizeWindow = () => {
@@ -227,7 +232,7 @@ export default class WaterFlow extends Component {
     render() {
         let { colTotal } = this.state;
         return (
-            <div onScroll={this._scrollWindow.bind(this)} className="container containerWaterFlow" ref="containerWaterFlow" style={{ height: Math.max.apply(null, colTotal) + 'px' }}>
+            <div /* onScroll={this._scrollWindow.bind(this)} */ className="containerWaterFlow" ref="containerWaterFlow" style={{ height: Math.max.apply(null, colTotal) + 'px' }}>
                 {this.renderItem()}
             </div>
         )
@@ -241,12 +246,12 @@ export default class WaterFlow extends Component {
         let { list, width, itemWidth } = this.props;
         this.dealData({ list, width, itemWidth });
         window.addEventListener('resize', this._resizeWindow.bind(this))
-        // window.addEventListener('scroll', this._scrollWindow.bind(this))
+        window.addEventListener('scroll', this._scrollWindow.bind(this))
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this._resizeWindow.bind(this))
-        // window.removeEventListener('scroll', this._scrollWindow.bind(this))
+        window.removeEventListener('scroll', this._scrollWindow.bind(this))
     }
 
 }

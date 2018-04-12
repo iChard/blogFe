@@ -98,7 +98,7 @@ class WriteArticle extends Component {
     }
 
     renderTags = () => {
-        let { tagAll, tagIds } = this.state;
+        let { tagAll } = this.state;
         let view = (
             <Select
                 mode="multiple"

@@ -1,7 +1,4 @@
 .right-col {
-    position: absolute;
-    right: 0;
-    left: 300px;
     background: transparent;
     width: auto;
     min-height: 100%;
@@ -21,7 +18,7 @@
     height: 100%;
 }
 .right-container {
-    margin: 40px 40px 80px;
+    padding: 40px 40px 80px;
     background: transparent;
     .artitle-title {
         color: #333;
