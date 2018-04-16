@@ -4,6 +4,8 @@ import './waterFlow.css';
 export default class WaterFlow extends Component {
 
     state = {
+        total: 98,
+        isLoading: true,
         isInit: false,
         width: 1000,
         itemWidth: 250,
@@ -17,7 +19,8 @@ export default class WaterFlow extends Component {
 
     componentWillReceiveProps(nextProps) {
         let { list, width, itemWidth } = nextProps;
-        this.dealData({ list, width, itemWidth })
+        this.dealData({ list, width, itemWidth });
+        this.setState({isLoading: false})
     }
 
     dealData = (obj) => {
@@ -45,7 +48,8 @@ export default class WaterFlow extends Component {
             itemWidth: itemWidth,
             iNum: iNum,
             colTotal: isInit ? colTotal : new Array(iNum).fill(0),
-            commonLeft: (width - iNum * itemWidth) / 2
+            commonLeft: (width - iNum * itemWidth) / 2,
+            isLoading: false
         })
     }
 
@@ -117,14 +121,21 @@ export default class WaterFlow extends Component {
     }
 
     _scrollWindow = () => {
-        let {colTotal}=this.state;
+        let {colTotal, total, list}=this.state;
         let { pullMore } = this.props;
         let scrollT = document.documentElement.scrollTop || document.body.scrollTop;
         let minT =Math.min.apply(null, colTotal);
         var clientHeight = document.documentElement.clientHeight;
-        if(minT < (clientHeight + scrollT)) {
-            pullMore && pullMore();
-        }        
+        if(list.length < 98) {
+            if(minT < (clientHeight + scrollT)) {
+                this.setState({isLoading: true})
+                pullMore && pullMore(() => {
+                    this.setState({isLoading: false})
+                });
+            }        
+        } else {
+            this.setState({isLoading: false})
+        }
     }
 
     _resizeWindow = () => {
@@ -230,10 +241,17 @@ export default class WaterFlow extends Component {
     }
 
     render() {
-        let { colTotal } = this.state;
+        let { colTotal, isLoading } = this.state;
         return (
-            <div /* onScroll={this._scrollWindow.bind(this)} */ className="containerWaterFlow" ref="containerWaterFlow" style={{ height: Math.max.apply(null, colTotal) + 'px' }}>
-                {this.renderItem()}
+            <div>
+                <div /* onScroll={this._scrollWindow.bind(this)} */ 
+                    className="containerWaterFlow" ref="containerWaterFlow" style={{ height: Math.max.apply(null, colTotal) + 'px' }}>
+                    {this.renderItem()}
+                </div>
+                {
+                    isLoading ? <ImgLoading /> : null
+                }
+                
             </div>
         )
     }
@@ -245,13 +263,16 @@ export default class WaterFlow extends Component {
     componentDidMount() {
         let { list, width, itemWidth } = this.props;
         this.dealData({ list, width, itemWidth });
-        window.addEventListener('resize', this._resizeWindow.bind(this))
-        window.addEventListener('scroll', this._scrollWindow.bind(this))
+        window.addEventListener('resize', this._resizeWindow)
+        window.addEventListener('scroll', this._scrollWindow)
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this._resizeWindow.bind(this))
-        window.removeEventListener('scroll', this._scrollWindow.bind(this))
+        window.removeEventListener('resize', this._resizeWindow)
+        window.removeEventListener('scroll', this._scrollWindow)
     }
 
 }
+let ImgLoading = () => (
+    <div className="loading-img">正在加载中...</div>
+)
