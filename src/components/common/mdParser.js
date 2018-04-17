@@ -1,5 +1,4 @@
 import hljs from 'highlight.js';
-// import hljs from "../../lib/highlight";
 import {getLanguage,highlight} from 'highlight.js'
 var Remarkable = require('remarkable');
 

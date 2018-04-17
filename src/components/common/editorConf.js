@@ -1,7 +1,6 @@
-import SimpleMDE from 'simplemde';
 import MdParser from './mdParser';
 
-let editorConfig = (conf) => {
+let editorConfig = (SimpleMDE,conf) => {
     return Object.assign({}, {
         placeholder: '正文...',
         tabSize: 4,

@@ -27,7 +27,7 @@ class Editor extends Component {
             handleToggleFullscreen();
         }
 
-        let econf = editorConfig(Object.assign({}, {
+        let econf = editorConfig(SimpleMDE,Object.assign({}, {
             element: this.refs.textarea,
         }, value ?  {
             initialValue: value
