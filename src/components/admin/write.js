@@ -137,7 +137,7 @@ class WriteArticle extends Component {
                 {this.renderItem('选择标签', this.renderTags())}
                 {this.renderItem('选择分类', this.renderCates())}
                 <Editor onChange={this.setArticle} toggleFull={this.toggleFullscreen} value={undefined}/>
-                <div className="action-area" style={{ left: this.state.footerLeft }}>
+                <div className="action-area" >
                     <Button type='primary' className='btn-pub' onClick={this.pubArticle} loading={this.state.saveLoading}>发布文章</Button>
                 </div>
             </div>

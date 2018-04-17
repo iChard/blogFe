@@ -12,6 +12,7 @@
 .sider {
     font-family: 'LingWai SC';
     font-size: 20px;
+    z-index: 99;
     .logo {
         display: flex;
         align-items: center;
@@ -59,7 +60,7 @@
         position: fixed;
         bottom: 0;
         right: 0;
-        left: 200px;
+        left: 0;
         z-index: 9;
         background-color: #F3F3F3;
         box-shadow: 0px -1px 2px 0px rgba(0,0,0,0.24);
