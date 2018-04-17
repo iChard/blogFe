@@ -1,4 +1,6 @@
 import hljs from 'highlight.js';
+// import hljs from "../../lib/highlight";
+import {getLanguage,highlight} from 'highlight.js'
 var Remarkable = require('remarkable');
 
 const md = new Remarkable('full', {
@@ -8,7 +10,8 @@ const md = new Remarkable('full', {
     labgPrefix: 'language-',
     linkify: true,
     typographer: false,
-    quotes: '“”‘’',
+    quotes: '“”‘’'
+    ,
     highlight: function (str, lang) {
         if(lang && hljs.getLanguage(lang)) {
             try{
